@@ -13,6 +13,7 @@ export default defineConfig({
     env: {
       api_url: '',
     },
+    experimentalOriginDependencies: true,
     hideXHRInCommandLog: true,
   },
 });
