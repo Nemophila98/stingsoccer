@@ -12,12 +12,12 @@ describe('template spec', () => {
   it('passes', () => {
     //Open sign up page from the Login page
     cy.visit('/');
+    cy.viewport(1400, 900);
     cy.contains('p', 'Create An Account').click();
 
     //Fill date to form sign up page
     cy.get('[name=firstName]').type(fname);
     cy.get('[name=lastName]').type(lName);
-    cy.get('[name=email]').type(lName);
     cy.get('[name=address1]').type(address1);
     cy.get('[type=tel]').first().clear().type(phone);
     cy.get('[name=email]').type(email);

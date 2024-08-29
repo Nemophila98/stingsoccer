@@ -11,7 +11,7 @@ export default defineConfig({
     fileServerFolder: '/cypress/servers',
     experimentalStudio: true,
     env: {
-      api_url: '',
+      api_url: 'https://thesportcheck-dev-api.azurewebsites.net',
     },
     experimentalOriginDependencies: true,
     hideXHRInCommandLog: true,
