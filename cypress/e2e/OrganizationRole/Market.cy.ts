@@ -17,8 +17,8 @@ describe('Market', () => {
     addSecondMarket();
     editMarketNameExist();
     editMarketSuccess();
-    deleteMarket();
     filterStatus();
+    deleteMarket();
   });
 
   const addMarketthenCancel = () => {
@@ -100,9 +100,9 @@ describe('Market', () => {
       });
     cy.get('input[name="name"]').as('marketName').clear();
     cy.get('@marketName').type(marketNameEdited);
-    cy.contains('div[class="flex flex-col w-full"]', 'Status').click();
+    // cy.contains('div[class="flex flex-col w-full"]', 'Status').click();
     cy.contains('button', 'Save').click();
-    cy.contains('div', 'Update success!');
+    cy.contains('div', 'Update market successfully');
     cy.contains('button', 'Cancel').click();
     return false;
   };
@@ -111,13 +111,13 @@ describe('Market', () => {
     cy.contains('div', 'Configuration').click({ force: true });
     cy.contains('a', 'MARKET').click();
 
-    cy.get('[name=query]').clear().type(marketName1);
+    cy.get('[name=query]').clear().type(marketNameEdited);
     cy.get('[role=rowgroup]')
       .find('td')
-      .contains(marketName1)
+      .contains(marketNameEdited)
       .each(market => {
-        const market1 = market.text();
-        if (market1 === market1) {
+        const marketNameEdited = market.text();
+        if (marketNameEdited === marketNameEdited) {
           cy.contains('span', 'Active');
           cy.wrap(market).parents('tr').find('td').eq(3).find('svg').eq(1).click();
           cy.get('[type="submit"]').click();

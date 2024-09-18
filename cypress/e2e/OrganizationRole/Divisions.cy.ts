@@ -3,7 +3,7 @@ const division1 = 'Division 1';
 const division2 = 'Division 2';
 const divisionEditName = 'Division 4';
 
-describe('Add Division', () => {
+describe(' Division', () => {
   it('Login passed', () => {
     loginSection('zxc112n+orgadmin@gmail.com', 'a123456A#');
     cy.visit('/');
@@ -14,8 +14,8 @@ describe('Add Division', () => {
     addSecondDivision();
     editDivisonExistName();
     editDivisionSuccess();
-    deleteDivision();
     filterStatus();
+    deleteDivision();
   });
 
   const addDivisionthenCancel = () => {
@@ -25,7 +25,7 @@ describe('Add Division', () => {
 
     //Add division save without input name
     cy.contains('button', 'ADD DIVISION').click();
-    cy.contains('button', 'Save').click();
+    cy.contains('button', 'Add').click();
     cy.contains('p', 'Please enter name').should('be.visible');
     cy.contains('button', 'Cancel').click();
 
@@ -41,13 +41,13 @@ describe('Add Division', () => {
     cy.get('[name=name]').type(division1);
     cy.contains('button', 'Cancel').click();
     cy.contains('header', 'Unsaved Changes').should('be.visible');
-    cy.get('[type=submit]').eq(1).click();
+    cy.get('[type=submit]').eq(1).click({ force: true });
   };
 
   const addDivisionExist = () => {
     cy.contains('button', 'ADD DIVISION').click();
     cy.get('[name=name]').type(division1);
-    cy.contains('button', 'Save').click();
+    cy.contains('button', 'Add').click();
     cy.contains('div', 'The division already exists');
     cy.contains('button', 'Cancel').click();
     return true;
@@ -56,7 +56,7 @@ describe('Add Division', () => {
   const addSecondDivision = () => {
     cy.contains('button', 'ADD DIVISION').click();
     cy.get('[name=name]').as('name').type(division2);
-    cy.get('select').select('North Texas');
+    // cy.get('select').select('North Texas');
     cy.contains('span', 'Select Directors').click();
     cy.get('input[type="checkbox"]').eq(1).check({ force: true }); //select a checkbox (fixed)
     cy.get('@name').click();
@@ -64,7 +64,7 @@ describe('Add Division', () => {
     cy.get('input[type="checkbox"]').eq(1).check({ force: true }); //select a checkbox (fixed)
     cy.get('@name').click();
     cy.contains('div[class="!mt-3"]', 'Active').click();
-    cy.contains('button', 'Save').click();
+    cy.contains('button', 'Add').click();
     cy.contains('div', 'Added division successfully');
     // cy.contains('button', 'Cancel').click();
     return false;
@@ -82,7 +82,8 @@ describe('Add Division', () => {
           cy.wrap(division).parents('tr').find('td').eq(2).find('a').click();
         }
       });
-    cy.get('[name=name]').as('nameEdited').clear().type(division2);
+    cy.get('[name=name]').clear();
+    cy.get('[name=name]').type(division2);
     cy.contains('button', 'Save').click();
     cy.contains('div', 'The division already exists');
     cy.contains('button', 'Cancel').click();
@@ -90,18 +91,19 @@ describe('Add Division', () => {
   };
 
   const editDivisionSuccess = () => {
-    cy.get('[name=query]').type(division1);
+    cy.get('[name=query]').clear().type(division2);
     cy.get('[role=rowgroup]')
       .find('td')
-      .contains(division1)
+      .contains(division2)
       .each(division => {
-        const division1 = division.text();
-        if (division1 === division1) {
+        const division2 = division.text();
+        if (division2 === division2) {
           cy.wrap(division).parents('tr').find('td').eq(2).find('a').click();
         }
       });
-    cy.get('[name=name]').as('nameEdited').clear().type(divisionEditName);
-    cy.get('select').select('West Texas (Odessa)');
+    cy.get('[name=name]').as('nameEdited').clear();
+    cy.get('@nameEdited').type(divisionEditName);
+    // cy.get('select').select('West Texas (Odessa)');
     cy.contains('span', 'Erin Medina').click();
     cy.get('input[type="checkbox"]').eq(3).check({ force: true }); //select a checkbox (fixed)
     cy.get('@nameEdited').click();
@@ -126,25 +128,26 @@ describe('Add Division', () => {
         const division1 = division.text();
         if (division1 === divisionEditName) {
           cy.contains('span', 'Inactive');
-          cy.wrap(division).parents('tr').find('td').eq(2).find('svg').eq(1).click();
-          cy.get('[type="submit"]').click();
+          cy.wrap(division).parents('tr').find('td').eq(2).find('svg').eq(1).click({ force: true });
+          cy.get('[type="submit"]').first().click();
         }
       });
 
-    cy.get('[name=query]').clear().type(division2);
+    cy.get('[name=query]').clear().type(division1);
     cy.get('[role=rowgroup]')
       .find('td')
-      .contains(division2)
+      .contains(division1)
       .each(division => {
-        const division2 = division.text();
-        if (division2 === division2) {
+        const division1 = division.text();
+        if (division1 === division1) {
           cy.contains('span', 'Active');
-          cy.wrap(division).parents('tr').find('td').eq(2).find('svg').eq(1).click();
-          cy.get('[type="submit"]').click();
+          cy.wrap(division).parents('tr').find('td').eq(2).find('svg').eq(1).click({ force: true });
+          cy.get('[type="submit"]').first().click();
         }
       });
     return true;
   };
+
   const filterStatus = () => {
     //Filter with "Active" status
     cy.contains('button', 'Filter').as('filter').click();
