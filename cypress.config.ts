@@ -3,7 +3,7 @@ import { defineConfig } from 'cypress';
 export default defineConfig({
   includeShadowDom: true,
   e2e: {
-    baseUrl: 'https://stingsoccer.dev.thesportcheck.com',
+    baseUrl: 'https://tenant.dev.thesportcheck.com/',
     viewportWidth: 1080,
     viewportHeight: 768,
     defaultCommandTimeout: 15e3,
